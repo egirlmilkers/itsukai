@@ -1,0 +1,8 @@
+{
+	"recommendations": [
+		// TSTL diagnostics inside VS Code
+		"typescript-to-lua.vscode-typescript-to-lua",
+		// Lua Language Server
+		"sumneko.lua"
+	]
+}

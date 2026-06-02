@@ -1,0 +1,11 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# TSTL Lua ouput
+lua/**/*.lua
+
+# OS / Editor junk
+.DS_Store
+Thumbs.db
+*.swp
