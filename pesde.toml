@@ -1,0 +1,11 @@
+name = "itsukai"
+version = "0.1.0"
+license = "GPL-3.0"
+
+[target]
+environment = "luau"
+
+[indices]
+default = "https://github.com/pesde-pkg/index"
+
+[dependencies]

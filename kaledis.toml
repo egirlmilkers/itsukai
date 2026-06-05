@@ -1,0 +1,12 @@
+"$schema" = "./kaledis.schema.json"
+
+game_id = "in.ladyofpa.itsukai"
+project_name = "itsukai"
+love = "11.5"
+detect_modules = true
+
+[layout]
+code = "src"
+bundle = ["assets/bundle/*"]
+external = ["assets/external/*"]
+

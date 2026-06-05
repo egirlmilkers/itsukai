@@ -1,0 +1,24 @@
+local Object = require('../core/Object')
+
+
+local Game_Xyz = setmetatable({}, Object)
+
+Game_Xyz.__index = Game_Xyz
+Game_Xyz.Super = Object
+
+
+Game_Xyz.ClassName = 'Game_Xyz'
+
+function Game_Xyz.new()
+	-- create the parent class
+	local object = Object.new()
+	-- now we combine
+	local self = setmetatable(object, Game_Xyz)
+
+	-- constructor logic
+
+	return self
+end
+
+
+return Game_Xyz
