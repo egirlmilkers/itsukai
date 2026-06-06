@@ -233,7 +233,7 @@ export type Animation = {
 	name: string;
 	offsetX: number;
 	offsetY: number;
-	rotation: Vector3;
+	rotation: {x: number, y: number, z: number};
 	scale: number;
 	soundTimings: {SoundTiming};
 	speed: number;
@@ -531,7 +531,7 @@ export type Effect = {
 }
 
 export type Audio = {
-	name: string;
+	name: string?;
 	volume: number;
 	pitch: number;
 	pan: number?;
