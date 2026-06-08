@@ -1,7 +1,7 @@
-local Data, _, _ = require('../globals')()
+local Data = require('../globals')()
 
 local Ext = require('../core/Ext')
-local Object = require('../core/Object')
+local Object = require('../engine/Object')
 
 local RMMZ = require('../types/rmmz')
 
@@ -20,12 +20,12 @@ function Game_System.new()
 	-- now we combine
 	local self = setmetatable(object, Game_System)
 
-	self:Initialize()
+	self:Init()
 
 	return self
 end
 
-function Game_System:Initialize()
+function Game_System:Init()
 	self._saveEnabled = true
 	self._menuEnabled = true
 	self._encounterEnabled = true

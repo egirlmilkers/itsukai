@@ -1,7 +1,7 @@
 local Data, Game = require('../globals')()
 
 local Util = require('../core/Util')
-local Object = require('../core/Object')
+local Object = require('../engine/Object')
 
 local Game_Temp = setmetatable({}, Object)
 Game_Temp.__index = Game_Temp
@@ -16,7 +16,7 @@ function Game_Temp.new()
 	-- now we combine
 	local self = setmetatable(object, Game_Temp)
 
-	self._isPlaytest = Util.IsOptionValid("test")
+	self._isPlaytest = Util.isOptionValid("test")
 	self._destinationX = nil :: number?
 	self._destinationY = nil :: number?
 	self._touchTarget = nil
@@ -116,7 +116,7 @@ function Game_Temp:RequestAnimation(targets, animationId: number, mirror: boolea
 
 		table.insert(self._animationQueue, request)
 
-		for target in targets do
+		for _, target in targets do
 			if target.StartAnimation then
 				target:StartAnimation()
 			end

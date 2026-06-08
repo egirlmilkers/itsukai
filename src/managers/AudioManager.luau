@@ -1,10 +1,12 @@
 local Ext = require('../core/Ext')
+local Graphics = require('../core/Graphics')
 local LoveAudio = require('../core/LoveAudio')
 
+local C = require('../types/core')
 local RMMZ = require('../types/rmmz')
 
 type Audio = RMMZ.Audio
-type LoveAudio = LoveAudio.LoveAudio
+type LoveAudio = C.LoveAudio
 
 local AudioManager = {}
 
@@ -21,15 +23,15 @@ local _bgsVolume = 100
 local _meVolume = 100
 local _seVolume = 100
 
-local _currentBgm: Audio? = nil :: Audio?
-local _currentBgs: Audio? = nil :: Audio?
-local _currentMe: Audio? = nil :: Audio? -- never used in original code
+local _currentBgm: Audio?
+local _currentBgs: Audio?
+local _currentMe: Audio? = nil -- never used in original code so we just make it nil
 
-local _bgmSource = nil :: LoveAudio?
-local _bgsSource = nil :: LoveAudio?
-local _meSource = nil :: LoveAudio?
-local _seSources = {} :: {LoveAudio}
-local _staticSources= {} :: {LoveAudio}
+local _bgmSource: LoveAudio?
+local _bgsSource: LoveAudio?
+local _meSource: LoveAudio?
+local _seSources: {LoveAudio} = {}
+local _staticSources: {LoveAudio} = {}
 
 AudioManager.ReplayFadeTime = 0.5
 AudioManager.Path = "assets/audio/"
@@ -38,7 +40,7 @@ AudioManager.Path = "assets/audio/"
 -------- Properties -------
 =======================]]--
 
-Ext.DefineProperty(AudioManager, "BgmVolume", {
+Ext.defineProperty(AudioManager, "BgmVolume", {
 	get = function(self)
 		return _bgmVolume
 	end,
@@ -48,7 +50,7 @@ Ext.DefineProperty(AudioManager, "BgmVolume", {
 	end,
 })
 
-Ext.DefineProperty(AudioManager, "BgsVolume", {
+Ext.defineProperty(AudioManager, "BgsVolume", {
 	get = function(self)
 		return _bgsVolume
 	end,
@@ -58,7 +60,7 @@ Ext.DefineProperty(AudioManager, "BgsVolume", {
 	end,
 })
 
-Ext.DefineProperty(AudioManager, "MeVolume", {
+Ext.defineProperty(AudioManager, "MeVolume", {
 	get = function(self)
 		return _meVolume
 	end,
@@ -68,7 +70,7 @@ Ext.DefineProperty(AudioManager, "MeVolume", {
 	end,
 })
 
-Ext.DefineProperty(AudioManager, "SeVolume", {
+Ext.defineProperty(AudioManager, "SeVolume", {
 	get = function(self)
 		return _seVolume
 	end,
@@ -92,7 +94,7 @@ function AudioManager:PlayBgm(bgm: Audio, pos: number?)
 		if bgm.name and bgm.name ~= "" then
 			_bgmSource = _createSource("bgm/", bgm.name, true)
 			_updateBgmParameters(bgm)
-			if not _meSource then
+			if not _meSource and _bgmSource then
 				_bgmSource:Play(true, pos or 0)
 			end
 		end
@@ -168,9 +170,10 @@ function AudioManager:PlayBgs(bgs: Audio, pos: number?)
 	else
 		self.StopBgs()
 		if bgs.name and bgs.name ~= "" then
-			_bgsSource = _createSource("bgs/", bgs.name, true)
+			local src = _createSource("bgs/", bgs.name, true)
+			_bgsSource = src
 			_updateBgsParameters(bgs)
-			_bgsSource:Play(true, pos or 0)
+			src:Play(true, pos or 0)
 		end
 	end
 
@@ -248,10 +251,13 @@ function AudioManager:PlayMe(me: Audio)
 		_currentBgm.pos = _bgmSource:Seek()
 		_bgmSource:Stop()
 	end
-	_meSource = _createSource("me/", me.name, false)
+
+	-- we separate the definition or else Luau complains
+	local src = _createSource("me/", me.name, false)
+	_meSource = src
 	_updateMeParameters(me)
-	_meSource:Play(false)
-	_meSource:AddStopListener(self.StopMe)
+	src:Play(false);
+	src:AddStopListener(self.StopMe)
 end
 
 function AudioManager.FadeOutMe(duration: number)
@@ -281,8 +287,8 @@ function AudioManager:PlaySe(se: Audio)
 	if se.name and se.name == "" then return end
 
 	-- Don't replay the same sound twice in one frame
-	local latestSources = Ext.Filter(self._seSources, function(src)
-		return src.frameCount == Graphics.frameCount
+	local latestSources = Ext.filter(self._seSources, function(src)
+		return src.frameCount == Graphics.FrameCount
 	end)
 
 	if table.find(latestSources, function(src)
@@ -417,7 +423,7 @@ end
 
 --- Destroys finished SE sources and removes them from the active list
 function _cleanupSe()
-	Ext.Filter(_seSources, function(src): boolean
+	Ext.filter(_seSources, function(src): boolean
 		if src:IsPlaying() then
 			return true
 		end

@@ -7,18 +7,18 @@ local encode
 local decode
 
 
-function JsonSerializer.Register(class: any)
+function JsonSerializer.register(class: any)
 	assert(class.ClassName, "Class must have a ClassName field to be registered")
 	registry[class.ClassName] = class
 end
 
-function JsonSerializer.Stringify(value: any): any
+function JsonSerializer.stringify(value: any): any
 	-- Prepare the table safely, THEN stringify the entire thing at once
 	local safeTable = encode(value)
 	return JSON.encode(safeTable)
 end
 
-function JsonSerializer.Parse(jsonString: string): any
+function JsonSerializer.parse(jsonString: string): any
 	-- Parse the string into a raw table, THEN rebuild the metatables
 	local rawTable = JSON.decode(jsonString)
 	return decode(rawTable)
@@ -60,14 +60,14 @@ function decode(value: any): any
 			value.__type = nil
 			setmetatable(value, classBlueprint)
 		else
-			warn("Unregistered class found in JSON: " .. tostring(className))
+			error("Unregistered class found in JSON: " .. tostring(className))
 		end
 	end
 
 	return value
 end
 
-JsonSerializer.Register(require("Object"))
-JsonSerializer.Register(require("GameObject"))
+JsonSerializer.register(require("../engine/Object"))
+JsonSerializer.register(require("../engine/GameObject"))
 
 return JsonSerializer

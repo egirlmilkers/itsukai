@@ -1,5 +1,5 @@
 local Util = require('../core/Util')
-local Object = require('../core/Object')
+local Object = require('../engine/Object')
 
 local Game_Message = setmetatable({}, Object)
 Game_Message.__index = Game_Message
@@ -202,7 +202,7 @@ function Game_Message:AllText()
 end
 
 function Game_Message:IsRTL()
-	return Util.ContainsArabic(self:AllText())
+	return Util.containsArabic(self:AllText())
 end
 
 

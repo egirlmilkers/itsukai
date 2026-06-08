@@ -1,5 +1,7 @@
+local Graphics = require("./core/Graphics")
 local Util = require('core/Util')
 local AudioManager = require('managers/AudioManager')
+
 
 function love.load(arg)
 	-- This will run once when the game loads
@@ -23,6 +25,7 @@ end
 
 function love.update(dt)
 	-- This will run every frame
+	Graphics:Update(dt)
 	AudioManager.Update(dt)
 end
 

@@ -9,7 +9,7 @@ function SaveManager.Save(saveName: string, object: any)
 	local jsonStr
 	-- a save file uses our custom classes so we use our special encoder
 	if saveName:lower():sub(1, 4) == "file" then
-		jsonStr = JsonSerializer.Stringify(object)
+		jsonStr = JsonSerializer.stringify(object)
 	-- global and config are basic json files
 	-- so save them and any other file as basic json
 	else
@@ -35,13 +35,13 @@ function SaveManager.Load(saveName: string): any?
 	-- Read the raw text from the drive
 	local contents, err = love.filesystem.read(saveFile)
 	if not contents then
-		warn(`Failed to read {saveFile}!\n Error: {err}`)
+		error(`Failed to read {saveFile}!\n Error: {err}`)
 		return nil
 	end
 
 	-- Route the raw text to the correct parser
 	if saveName:lower():sub(1, 4) == "file" then
-		return JsonSerializer.Parse(contents) 
+		return JsonSerializer.parse(contents) 
 	else
 		return JSON.decode(contents)
 	end

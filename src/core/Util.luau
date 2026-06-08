@@ -3,7 +3,7 @@ local Util = {}
 
 Util.Flags = {}
 
-function Util.ContainsArabic(str: string): boolean
+function Util.containsArabic(str: string): boolean
 	-- utf8.codes iterates through the string, returning the byte offset and the Unicode codepoint
 	for _, codepoint in utf8.codes(str) do
 		-- Check if the codepoint falls within the specified Arabic Unicode blocks
@@ -17,7 +17,7 @@ function Util.ContainsArabic(str: string): boolean
 	return false
 end
 
-function Util.IsOptionValid(str: string): boolean
+function Util.isOptionValid(str: string): boolean
 	return if Util.Flags[str] then true else false
 end
 

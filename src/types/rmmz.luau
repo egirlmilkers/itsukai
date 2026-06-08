@@ -583,5 +583,4 @@ export type TroopPage = {
 	span: number;
 }
 
-
 return RMMZ

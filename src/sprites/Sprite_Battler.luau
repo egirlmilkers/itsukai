@@ -1,4 +1,4 @@
-local GameObject = require('../core/GameObject')
+local GameObject = require('../engine/GameObject')
 
 local Sprite_Battler = setmetatable({}, GameObject)
 

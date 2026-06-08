@@ -1,11 +1,11 @@
 local Ext = {}
 
 
-function Ext.PadZeroes(num: number, padAmount: number): string
+function Ext.padZeroes(num: number, padAmount: number): string
 	return string.format(`%0{padAmount}d`, num)
 end
 
-function Ext.DefineProperty(obj: any, prop: string, descriptor: { get: ((any) -> any)?, set: ((any, any) -> ())? })
+function Ext.defineProperty(obj: any, prop: string, descriptor: { get: ((any) -> any)?, set: ((any, any) -> ())? })
 	if type(obj) ~= "table" then
 		error("You can only define properties on Lua tables. Native userdata is locked.", 2)
 	end
@@ -115,7 +115,7 @@ function Ext.DefineProperty(obj: any, prop: string, descriptor: { get: ((any) ->
 	mt.__props[prop] = descriptor
 end
 
-function Ext.Filter<T>(array: {T}, predicate: (value: T) -> boolean)
+function Ext.filter<T>(array: {T}, predicate: (value: T) -> boolean)
 	local writeIndex = 1
 
 	-- shift passing elements forward

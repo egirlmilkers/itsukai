@@ -1,48 +1,19 @@
-local Object = require('Object')
+local Object = require('../engine/Object')
 local Ext = require('Ext')
+
+local C = require('../types/core')
+
+type LoveAudio = C.LoveAudio
+
 
 local LoveAudio = setmetatable({}, Object)
 
 LoveAudio.__index = LoveAudio
 LoveAudio.Super = Object
 
-export type LoveAudio = {
-	_path: string;
-	Path: string;
-	_volume: number;
-	Volume: number;
-	_pitch: number;
-	Pitch: number;
-	_pan: number;
-	Pan: number;
+LoveAudio.ClassName = "LoveAudio"
 
-	_source: Source;
-	_stopListeners: {() -> ()};
-	_isError: boolean;
-	_fadeTarget: number;
-	_fadeFrom: number;
-	_fadeDuration: number;
-	_fadeElapsed: number;
-
-	new: (string, boolean?) -> LoveAudio;
-	IsReady: (LoveAudio) -> boolean;
-	IsError: (LoveAudio) -> boolean;
-	IsPlaying: (LoveAudio) -> boolean;
-	Play: (LoveAudio, boolean?, number?) -> ();
-	Stop: (LoveAudio) -> ();
-	Pause: (LoveAudio) -> ();
-	Destroy: (LoveAudio) -> ();
-	FadeIn: (LoveAudio, number) -> ();
-	FadeOut: (LoveAudio, number) -> ();
-	Clear: (LoveAudio) -> ();
-	Update: (LoveAudio, number) -> ();
-	Seek: (LoveAudio) -> number;
-	AddStopListener: (LoveAudio, ()->()) -> ();
-
-	_load: (LoveAudio, boolean?) -> ()
-}
-
-function LoveAudio.new(path: string, stream: boolean?): LoveAudio
+function LoveAudio.new(path: string, stream: boolean?): C.LoveAudio
 	local object = Object.new()
 	local self = setmetatable(object, LoveAudio)
 
@@ -58,14 +29,14 @@ end
 -------- Properties -------
 =======================]]--
 
-Ext.DefineProperty(LoveAudio, "Path", {
+Ext.defineProperty(LoveAudio, "Path", {
 	--- The path of the audio file.
 	get = function(self)
 		return self._path
 	end,
 })
 
-Ext.DefineProperty(LoveAudio, "Volume", {
+Ext.defineProperty(LoveAudio, "Volume", {
 	--- The volume of the audio.
 	get = function(self)
 		return self._volume
@@ -79,7 +50,7 @@ Ext.DefineProperty(LoveAudio, "Volume", {
 	end,
 })
 
-Ext.DefineProperty(LoveAudio, "Pitch", {
+Ext.defineProperty(LoveAudio, "Pitch", {
 	--- The pitch of the audio.
 	get = function(self)
 		return self._pitch
@@ -93,7 +64,7 @@ Ext.DefineProperty(LoveAudio, "Pitch", {
 	end,
 })
 
-Ext.DefineProperty(LoveAudio, "Pan", {
+Ext.defineProperty(LoveAudio, "Pan", {
 	--- The pan of the audio.
 	get = function(self)
 		return self._pan
@@ -115,24 +86,24 @@ Ext.DefineProperty(LoveAudio, "Pan", {
 =======================]]--
 
 --- Returns true if the source is ready.
-function LoveAudio:IsReady(): boolean
+function LoveAudio.IsReady(self: LoveAudio): boolean
 	return self._source ~= nil and not self._isError
 end
 
 --- Returns true if the source errored.
-function LoveAudio:IsError(): boolean
+function LoveAudio.IsError(self: LoveAudio): boolean
 	return self._isError
 end
 
 --- Returns true if the source is currently playing.
-function LoveAudio:IsPlaying(): boolean
+function LoveAudio.IsPlaying(self: LoveAudio): boolean
 	return self._source ~= nil and self._source:isPlaying()
 end
 
 --- Plays the source.
 --- @param loop  Whether to loop. Defaults to false.
 --- @param offset  Start position in seconds. Defaults to 0.
-function LoveAudio:Play(loop: boolean?, offset: number?)
+function LoveAudio.Play(self: LoveAudio, loop: boolean?, offset: number?)
 	local source = self._source
 	if not source then return end
 
@@ -146,7 +117,7 @@ function LoveAudio:Play(loop: boolean?, offset: number?)
 end
 
 --- Stops the source and fires any registered stop listeners.
-function LoveAudio:Stop()
+function LoveAudio.Stop(self: LoveAudio)
 	if self._source then
 		self._source:stop()
 	end
@@ -158,14 +129,14 @@ function LoveAudio:Stop()
 end
 
 --- Pauses the source without resetting its position.
-function LoveAudio:Pause()
+function LoveAudio.Pause(self: LoveAudio)
 	if self._source then
 		self._source:pause()
 	end
 end
 
 --- Releases the underlying LÖVE source. Call when the audio is no longer needed.
-function LoveAudio:Destroy()
+function LoveAudio.Destroy(self: LoveAudio)
 	self:Stop()
 	if self._source then
 		self._source:release()
@@ -175,7 +146,7 @@ end
 
 --- Fades the volume in over `duration` seconds using a coroutine-style update.
 --- AudioManager drives this via LoveAudio:Update(dt) each frame.
-function LoveAudio:FadeIn(duration: number)
+function LoveAudio.FadeIn(self: LoveAudio, duration: number)
 	if not self._source then return end
 
 	self._fadeTarget = self._volume
@@ -186,7 +157,7 @@ function LoveAudio:FadeIn(duration: number)
 end
 
 --- Fades the volume out over `duration` seconds. Stops the source when done.
-function LoveAudio:FadeOut(duration: number)
+function LoveAudio.FadeOut(self: LoveAudio, duration: number)
 	if not self._source then return end
 
 	self._fadeTarget = 0
@@ -195,7 +166,7 @@ function LoveAudio:FadeOut(duration: number)
 	self._fadeElapsed  = 0
 end
 
-function LoveAudio:Clear()
+function LoveAudio.Clear(self: LoveAudio)
 	self:Stop()
 	self._volume = 1
 	self._pitch = 1
@@ -205,7 +176,7 @@ function LoveAudio:Clear()
 end
 
 --- Must be called each frame from love.update(dt) for fades to work.
-function LoveAudio:Update(dt: number)
+function LoveAudio.Update(self: LoveAudio, dt: number)
 	if self._fadeDuration and self._fadeDuration > 0 then
 		self._fadeElapsed = (self._fadeElapsed or 0) + dt
 		local t = math.min(self._fadeElapsed / self._fadeDuration, 1)
@@ -223,7 +194,7 @@ function LoveAudio:Update(dt: number)
 end
 
 --- Returns the current playback position in seconds.
-function LoveAudio:Seek(): number
+function LoveAudio.Seek(self: LoveAudio): number
 	if self._source then
 		return self._source:tell("seconds")
 	end
@@ -231,7 +202,7 @@ function LoveAudio:Seek(): number
 end
 
 --- Registers a callback to be called once when the source stops.
-function LoveAudio:AddStopListener(fn: () -> ())
+function LoveAudio.AddStopListener(self: LoveAudio, fn: () -> ())
 	table.insert(self._stopListeners, fn)
 end
 
@@ -240,7 +211,7 @@ end
 ---- PRIVATE FUNCTIONS ----
 =======================]]--
 
-function LoveAudio:_load(stream: boolean?)
+function LoveAudio._load(self: LoveAudio, stream: boolean?)
 	local ok, result = pcall(function()
 		local sourceType = stream and "stream" or "static"
 		return love.audio.newSource(self._path, sourceType)
