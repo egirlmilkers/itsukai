@@ -1,1 +1,0 @@
-This folder be included inside the .love bundle

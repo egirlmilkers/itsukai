@@ -3,3 +3,9 @@ dist/
 reference.txt
 luau_packages
 Untitled-1.lua
+assets/bundle/img/
+assets/bundle/audio/
+assets/bundle/data/
+assets/bundle/effects/
+assets/bundle/fonts/
+assets/bundle/icon/

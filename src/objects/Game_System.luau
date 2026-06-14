@@ -222,7 +222,7 @@ function Game_System:PlaytimeText(): string
 	local hour = math.floor(self.Playtime() / 60 / 60)
 	local min = math.floor(self.Playtime() / 60) % 60
 	local sec = self.Playtime() % 60
-	return `{Ext.PadZeroes(hour, 2)}:{Ext.PadZeroes(min, 2)}:{Ext.PadZeroes(sec, 2)}`
+	return `{Ext.padZeroes(hour, 2)}:{Ext.padZeroes(min, 2)}:{Ext.padZeroes(sec, 2)}`
 end
 
 function Game_System:SaveBgm()

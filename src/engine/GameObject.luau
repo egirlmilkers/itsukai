@@ -1,5 +1,5 @@
 -- without the return statement, we wouldn't be able to declare this variable
-local Object = require('Object')
+local Object = require('./Object')
 
 local E = require('../types/engine')
 

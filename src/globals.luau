@@ -1,24 +1,24 @@
-local RMMZ = require('types/rmmz')
+local G = require('types/globals')
 
-local Data = {
-	Actors = nil :: {RMMZ.Actor}?;
-	Classes = nil :: {RMMZ.Class}?;
-	Skills = nil :: {RMMZ.Skill}?;
-	Items = nil :: {RMMZ.Item}?;
-	Weapons = nil :: {RMMZ.Weapon}?;
-	Armors = nil :: {RMMZ.Armor}?;
-	Enemies = nil :: {RMMZ.Enemy}?;
-	Troops = nil :: {RMMZ.Troop}?;
-	States = nil :: {RMMZ.State}?;
-	Animations = nil :: {RMMZ.Animation}?;
-	Tilesets = nil :: {RMMZ.Tileset}?;
-	CommonEvents = nil :: {RMMZ.CommonEvent}?;
-	System = nil :: RMMZ.System?;
-	MapInfos = nil :: {RMMZ.MapInfo}?;
-	Map = nil :: RMMZ.Map?;
+local Data: G.Data = {
+	Actors = nil;
+	Classes = nil;
+	Skills = nil;
+	Items = nil;
+	Weapons = nil;
+	Armors = nil;
+	Enemies = nil;
+	Troops = nil;
+	States = nil;
+	Animations = nil;
+	Tilesets = nil;
+	CommonEvents = nil;
+	System = nil;
+	MapInfos = nil;
+	Map = nil;
 }
 
-local Game = {
+local Game: G.Game = {
 	Temp = nil;
 	System = nil;
 	Screen = nil;
@@ -34,7 +34,7 @@ local Game = {
 	Player = nil;
 }
 
-local TestEvent = nil
+local TestEvent: G.TestEvent = nil
 
 return function()
 	return Data, Game, TestEvent

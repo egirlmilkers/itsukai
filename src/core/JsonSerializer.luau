@@ -69,5 +69,7 @@ end
 
 JsonSerializer.register(require("../engine/Object"))
 JsonSerializer.register(require("../engine/GameObject"))
+JsonSerializer.register(require("../core/LoveAudio"))
+JsonSerializer.register(require("../core/Stage"))
 
 return JsonSerializer

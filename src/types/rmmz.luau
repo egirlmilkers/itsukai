@@ -583,4 +583,17 @@ export type TroopPage = {
 	span: number;
 }
 
+
+--[[=======================
+------- Misc Types --------
+=======================]]--
+
+-- unused
+export type Error = {
+	name: string;
+	src: string;
+	url: string;
+}
+
+
 return RMMZ

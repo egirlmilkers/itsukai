@@ -1,6 +1,8 @@
 local Graphics = require("./core/Graphics")
 local Util = require('core/Util')
 local AudioManager = require('managers/AudioManager')
+local SceneManager = require('managers/SceneManager')
+local Scene_Boot = require("./scenes/Scene_Boot")
 
 
 function love.load(arg)
@@ -21,11 +23,14 @@ function love.load(arg)
 			end
 		end
 	end
+
+	SceneManager:GoTo(Scene_Boot)
 end
 
 function love.update(dt)
 	-- This will run every frame
 	Graphics:Update(dt)
+	SceneManager:Update(dt)
 	AudioManager.Update(dt)
 end
 

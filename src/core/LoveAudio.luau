@@ -1,5 +1,5 @@
 local Object = require('../engine/Object')
-local Ext = require('Ext')
+local Ext = require('./Ext')
 
 local C = require('../types/core')
 

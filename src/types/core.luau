@@ -1,4 +1,4 @@
-local E = require('engine')
+local E = require('./engine')
 
 
 local Core = {}

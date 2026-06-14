@@ -36,13 +36,11 @@ function SceneManager:Init(sceneClass)
 end
 
 function SceneManager:GoTo(scene: S.Base)
-	if not scene:IsA('Scene_Base') or not nil then
+	if not scene:IsA('Scene_Base') then
 		error('Error in SceneManager:GoTo(). Provided object is not a scene.')
 	end
 
-	if scene then
-		_nextScene = scene.new()
-	end
+	_nextScene = scene.new()
 
 	if _scene then
 		_scene:Stop()
@@ -132,7 +130,7 @@ function SceneManager.onBeforeSceneStart()
 	_previousScene = nil
 end
 
-function SceneManager.onStageStart()
+function SceneManager.onSceneStart()
 	Graphics.Loading = false
 	Graphics.Stage = _scene
 end

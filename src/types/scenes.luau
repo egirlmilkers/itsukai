@@ -1,4 +1,4 @@
-local C = require('core')
+local C = require('./core')
 
 
 local Scenes = {}
@@ -18,11 +18,18 @@ export type Base = C.Stage & {
 	Update: (Base, number) -> ();
 	Stop: (Base) -> ();
 	Terminate: (Base) -> ();
+	IsReady: (Base) -> boolean;
 	IsStarted: (Base) -> boolean;
 	IsBusy: (Base) -> boolean;
 	IsFading: (Base) -> boolean;
 	UpdateFade: (Base) -> ();
 	UpdateChildren: (Base) -> ();
+}
+
+export type Boot = Base & {
+	_databaseLoaded: boolean;
+
+	new: () -> Boot;
 }
 
 return Scenes
