@@ -10,7 +10,7 @@
 			"presentation": { "reveal": "always", "panel": "shared" }
 		},
 		{
-			"label": "Dev (watch)",
+			"label": "Watch",
 			"type": "npm",
 			"script": "dev",
 			"problemMatcher": "$tsc-watch",

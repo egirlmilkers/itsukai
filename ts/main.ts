@@ -1,5 +1,4 @@
-import { KeyConstant } from "love.keyboard"
-
+import { KeyConstant } from 'love.keyboard'
 
 /*=========================
 ------ LÖVE Callbacks -----
@@ -18,7 +17,12 @@ love.draw = () => {
 	//
 }
 
-love.mousepressed = (x: number, y: number, button: number, isTouch: boolean) => {
+love.mousepressed = (
+	x: number,
+	y: number,
+	button: number,
+	isTouch: boolean,
+) => {
 	//
 }
 
@@ -39,10 +43,10 @@ love.focus = (inFocus: boolean) => {
 // Return true to prevent the game from actually quitting
 love.quit = () => {
 	if (false) {
-		print("We are not ready to quit yet!")
+		print('We are not ready to quit yet!')
 		return true
 	} else {
-		print("Thanks for playing. Please play again soon!")
+		print('Thanks for playing. Please play again soon!')
 		return false
 	}
 }

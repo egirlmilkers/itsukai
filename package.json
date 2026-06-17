@@ -20,26 +20,17 @@
 		"preinstall": "npx only-allow pnpm",
 		"love": "love lua --console",
 		"build": "pnpm build:tstl && pnpm build:copy",
-		"lint": "pnpm lint:prettier && pnpm lint:eslint",
+		"dev": "tstl -w -p tsconfig.json",
 		"build:tstl": "tstl -p tsconfig.json",
-		"build:copy": "copyfiles --all \"assets/**/*\" lua",
-		"build:watch": "tstl -w -p tsconfig.json",
-		"lint:eslint": "eslint -c .eslintrc src/**",
-		"lint:prettier": "prettier \"**/*.{js,ts,ym,md}\" --check",
-		"fix:prettier": "prettier \"**/*.{js,ts,ym,md}\" --check --write",
+		"build:copy": "node -e \"fs.cpSync('assets', 'lua/assets', { recursive: true, force: true })\"",
 		"clean": "node -e \"fs.rmSync('lua',{recursive:true,force:true})\""
 	},
 	"devDependencies": {
-		"@typescript-eslint/eslint-plugin": "^8.61.1",
 		"@typescript-to-lua/language-extensions": "^1.19.0",
-		"copyfiles": "^2.4.1",
-		"eslint": "^10.5.0",
-		"eslint-config-prettier": "^10.1.8",
 		"love-typescript-definitions": "^11.5.3",
 		"lua-types": "^2.14.1",
-		"prettier": "^3.8.4",
-		"prettier-plugin-organize-imports": "^4.3.0",
 		"typescript": "^6.0.3",
-		"typescript-to-lua": "^1.36.0"
+		"typescript-eslint": "^8.61.1",
+		"typescript-to-lua": "^1.37.0"
 	}
 }

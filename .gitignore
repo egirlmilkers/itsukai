@@ -3,7 +3,7 @@ node_modules/
 .pnpm-store/
 
 # TSTL Lua ouput
-lua/**/*.lua
+lua/
 
 # OS / Editor junk
 .DS_Store

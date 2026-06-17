@@ -3,6 +3,10 @@
 		// TSTL diagnostics inside VS Code
 		"typescript-to-lua.vscode-typescript-to-lua",
 		// Lua Language Server
-		"sumneko.lua"
+		"sumneko.lua",
+		// To keep code looking clean <3
+		"esbenp.prettier-vscode",
+		// To catch code errors before even needing to run anything
+		"dbaeumer.vscode-eslint"
 	]
 }
