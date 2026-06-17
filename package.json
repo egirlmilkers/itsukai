@@ -3,8 +3,8 @@
 	"version": "0.1.0",
 	"private": true,
 	"type": "module",
-	"description": "A RPG engine made with LÖVE 🩷",
-	"license": "GPL-3.0",
+	"description": "An RPG engine made with LÖVE 🩷",
+	"license": "MPL-2.0",
 	"author": {
 		"name": "SoniaNvm (EGirlMilkers)",
 		"url": "https://github.com/egirlmilkers"

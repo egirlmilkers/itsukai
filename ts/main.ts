@@ -1,4 +1,8 @@
 import { KeyConstant } from 'love.keyboard'
+import { Manager } from './lib/roomy.js'
+
+
+const SceneManager = new Manager()
 
 /*=========================
 ------ LÖVE Callbacks -----
@@ -6,7 +10,7 @@ import { KeyConstant } from 'love.keyboard'
 
 // This function gets called only once when the game is started
 love.load = () => {
-	//
+	SceneManager.hook()
 }
 
 love.update = (dt: number) => {
